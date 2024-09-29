@@ -66,5 +66,20 @@ def update_item(item_id: int, updated_item: Item):
             return updated_item
     raise HTTPException(status_code=404, detail="Item not found")
 
-
+@app.patch("/menu/{item_id}", response_model=Item)
+def patch_item(item_id: int, item_update: Item):
+    for item in items:
+        if item.id == item_id:
+            if item_update.name is not None:
+                item.name = item_update.name
+            if item_update.price is not None:
+                item.price = item_update.price
+            if item_update.is_available is not None:
+                item.is_available = item_update.is_available
+            if item_update.category is not None:
+                item.category = item_update.category
+            if item_update.description is not None:
+                item.description = item_update.description
+            return item
+    raise HTTPException(status_code=404, detail="Item not found")
 
