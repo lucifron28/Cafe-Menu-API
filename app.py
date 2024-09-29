@@ -53,7 +53,10 @@ def get_items_by_category(category_name: str):
             items_by_category.append(item)
     return items_by_category
 
-
+@app.post("/menu", response_model=Item)
+def create_item(item: Item):
+    items.append(item)
+    return item
 
 
 
