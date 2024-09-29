@@ -34,11 +34,24 @@ items = [
     Item(id=10, name="Macchiato", price=3.0, is_available=True, category="coffee", description="A rich macchiato with a touch of foam.")
 ]
 
+@app.get("/menu", response_model=List[Item])
+def get_items():
+    return items
 
+@app.get("/menu/{item_id}", response_model=Item)
+def get_item(item_id: int):
+    for item in items:
+        if item.id == item_id:
+            return item
+    raise HTTPException(status_code=404, detail="Item not found")
 
-
-
-
+@app.get("/menu/category/{category_name}", response_model=List[Item])
+def get_items_by_category(category_name: str):
+    items_by_category = []
+    for item in items:
+        if item.category == category_name:
+            items_by_category.append(item)
+    return items_by_category
 
 
 
