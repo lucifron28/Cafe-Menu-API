@@ -58,7 +58,13 @@ def create_item(item: Item):
     items.append(item)
     return item
 
-
+@app.put("/menu/{item_id}", response_model=Item)
+def update_item(item_id: int, updated_item: Item):
+    for index, item in enumerate(items):
+        if item.id == item_id:
+            items[index] = updated_item
+            return updated_item
+    raise HTTPException(status_code=404, detail="Item not found")
 
 
 
