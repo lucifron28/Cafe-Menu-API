@@ -83,3 +83,9 @@ def patch_item(item_id: int, item_update: Item):
             return item
     raise HTTPException(status_code=404, detail="Item not found")
 
+@app.delete("/menu/{item_id}", response_model=Item)
+def delete_item(item_id: int):
+    for index, item in enumerate(items):
+        if item.id == item_id:
+            return items.pop(index)
+    raise HTTPException(status_code=404, detail="Item not found")
